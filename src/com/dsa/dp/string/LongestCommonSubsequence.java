@@ -4,10 +4,12 @@ import java.util.Arrays;
 
 public class LongestCommonSubsequence {
     public static void main(String[] args) {
-        String s1="abcde";
-        String s2="abace";
+        String s1="leeds";
+        String s2="exe";
+        System.out.println("s1: "+s1);
+        System.out.println("s2: "+s2);
         System.out.println(longestCommonSubsequenceMemo(s1,s2));
-        System.out.println(longestCommonSubsequenceTabu(s1,s2));
+//        System.out.println(longestCommonSubsequenceTabu(s1,s2));
     }
 
     public static int longestCommonSubsequenceTabu(String s1, String s2) {
@@ -50,25 +52,32 @@ public class LongestCommonSubsequence {
 
         for (int[] row : dp)
             Arrays.fill(row,-1);
-
-        int ans = helperMemo(s1.length() , s2.length() , s1, s2, dp);
+        StringBuilder sb = new StringBuilder();
+        int ans = helperMemo(s1.length() , s2.length() , s1, s2, dp, sb);
 //        for (int[] row : dp)
 //            System.out.println(Arrays.toString(row));
+        System.out.print("using dp table: ");
         printHelper(s1,s2,dp);
+        String sub = sb.toString();
+        System.out.print("using String builder in modified recursion: "+sub);
+
         return ans;
     }
 
-    private static int helperMemo(int i1, int i2, String s1, String s2, int[][] dp) {
+    private static int helperMemo(int i1, int i2, String s1, String s2, int[][] dp,StringBuilder sb) {
         if(i1==0 || i2==0)
             return 0;
         else {
             if(dp[i1][i2]!=-1)
                 return dp[i1][i2];
 
-            if(s1.charAt(i1-1)==s2.charAt(i2-1))
-                return dp[i1][i2] =  1 + helperMemo(i1-1, i2-1, s1, s2, dp);
+            if(s1.charAt(i1-1)==s2.charAt(i2-1)) {
+                System.out.println(s2.charAt(i2-1));
+                sb.append(s2.charAt(i2-1));
+                return dp[i1][i2] = 1 + helperMemo(i1 - 1, i2 - 1, s1, s2, dp, sb);
+            }
             else
-                return dp[i1][i2] =  Math.max(helperMemo(i1-1, i2, s1, s2, dp),helperMemo(i1, i2-1, s1, s2, dp));
+                return dp[i1][i2] =  Math.max(helperMemo(i1-1, i2, s1, s2, dp,sb),helperMemo(i1, i2-1, s1, s2, dp,sb));
 
 
         }

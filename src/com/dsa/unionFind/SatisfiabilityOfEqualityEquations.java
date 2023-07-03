@@ -12,10 +12,10 @@ public class SatisfiabilityOfEqualityEquations {
     public static boolean equationsPossible(String[] equations) {
         parent = new int[26];
         size = new int[26];
-
+        DSU bob = new DSU(8);
         for(int i=0;i<26;i++){
             parent[i]=i;
-            size[i]=i;
+            size[i]=1;
         }
 
         for(String s:equations){
@@ -59,6 +59,55 @@ public class SatisfiabilityOfEqualityEquations {
         else{
             parent[a]=b;
             size[b]+=size[a];
+        }
+    }
+
+
+    static class DSU{
+        int[] parent;
+        int[] size;
+        int components;
+
+        DSU(int n){
+            components =n;
+            parent = new int[n+1];
+            size = new int[n+1];
+
+            for(int i=0;i<=n;i++){
+                parent[i]=i;
+                size[i]=i;
+            }
+        }
+
+        int find(int n){
+            if(parent[n]==n){
+                return n;
+            }
+            return parent[n] = find(parent[n]);
+        }
+
+        int union(int a, int b){
+            a = find(a);
+            b = find(b);
+
+            if(a==b){
+                return 0;
+            }
+
+            if(size[a]>=size[b]){
+                parent[b]=a;
+                size[a]+=size[b];
+            }else{
+                parent[a]=b;
+                size[b]+=size[a];
+            }
+
+            components--;
+            return 1;
+        }
+
+        boolean isConnected(){
+            return components==1;
         }
     }
 }

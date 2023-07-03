@@ -40,7 +40,7 @@ public class MinimumWindowSubstring {
                         count++;
                     i++;
                 }
-//                j++;
+                j++;
             }
         }
 
