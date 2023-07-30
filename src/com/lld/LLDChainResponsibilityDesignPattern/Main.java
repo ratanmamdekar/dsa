@@ -1,0 +1,19 @@
+package com.lld.LLDChainResponsibilityDesignPattern;
+
+public class Main {
+
+    public static void main(String args[]) {
+
+        LogProcessor logObject = new InfoLogProcessor(new DebugLogProcessor(new ErrorLogProcessor(null)));
+
+        logObject.log(LogProcessor.ERROR, "exception happens");
+        logObject.log(LogProcessor.DEBUG, "need to debug this ");
+        logObject.log(LogProcessor.INFO, "just for info ");
+
+        //instead of passing enums, have separate methods
+        logObject.info("just for info ");
+        logObject.debug("just for info ");
+        logObject.error("just for info ");
+
+    }
+}

@@ -1,6 +1,7 @@
 package com.lld.zeta;
 
-import static zeta.CommonConstants.*;
+
+import static com.lld.zeta.CommonConstants.*;
 
 public enum CellType {
     NORMAL_CELL(NORMAL_CELL_SCORE),
